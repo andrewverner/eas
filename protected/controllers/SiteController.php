@@ -109,11 +109,17 @@ class SiteController extends Controller
 
 	public function actionCallback()
     {
+        echo '<pre>';
         if (isset($_GET['code'])) {
             $authCode = base64_encode('862b3aa0e295461f8f2fdaaf3055c3f4JSt85YT7p8w3B36sTvQfzCX37TIi4JDabNNOd6iQ');
             $ch = curl_init('https://login.eveonline.com/oauth/token');
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_HEADER, [
+                "Authorization Basic $authCode",
+                'Content-Type: application/x-www-form-urlencoded',
+                'Host: login.eveonline.com'
+            ]);
+            var_dump([
                 "Authorization Basic $authCode",
                 'Content-Type: application/x-www-form-urlencoded',
                 'Host: login.eveonline.com'
@@ -126,6 +132,7 @@ class SiteController extends Controller
             $result = curl_exec($ch);
             var_dump($result);
         }
+        echo '</pre>';
     }
 
 }
