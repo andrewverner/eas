@@ -10,7 +10,7 @@ class m161114_103031_create_user_table extends CDbMigration
             'characterName' => 'varchar(255) not null',
             'accessToken' => 'varchar(255) not null',
             'expiresOn' => 'datetime not null',
-            'scopes' => 'varchar'
+            'scopes' => 'varchar(2048)'
         ],'charset=utf8');
 	}
 
