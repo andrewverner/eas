@@ -154,6 +154,7 @@ class SiteController extends Controller
 
     public function actionTest()
     {
+        echo '<pre>';
         $ch = curl_init('https://login.eveonline.com/oauth/verify');
         curl_setopt($ch, CURLOPT_POST, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -166,6 +167,7 @@ class SiteController extends Controller
         $character = json_decode($result);
 
         print_r($character);
+        echo '</pre>';
     }
 
 }
