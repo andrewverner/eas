@@ -115,7 +115,7 @@ class SiteController extends Controller
             $ch = curl_init('https://login.eveonline.com/oauth/token');
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                "Authorization Basic $authCode",
+                "Authorization: Basic $authCode",
                 'Content-Type: application/json',
                 'Host: login.eveonline.com'
             ]);
