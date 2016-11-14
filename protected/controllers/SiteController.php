@@ -186,6 +186,7 @@ class SiteController extends Controller
 
     public function actionUser($id)
     {
+        echo '<pre>';
         $user = User::model()->findByAttributes([
             'characterID' => $id
         ]);
@@ -204,6 +205,7 @@ class SiteController extends Controller
 
             print_r($json);
         }
+        echo '</pre>';
     }
 
 }
