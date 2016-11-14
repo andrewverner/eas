@@ -111,7 +111,7 @@ class SiteController extends Controller
     {
         echo '<pre>';
         if (isset($_GET['code'])) {
-            $authCode = base64_encode('862b3aa0e295461f8f2fdaaf3055c3f4:JSt85YT7p8w3B36sTvQfzCX37TIi4JDabNNOd6iQ');
+            /*$authCode = base64_encode('862b3aa0e295461f8f2fdaaf3055c3f4:JSt85YT7p8w3B36sTvQfzCX37TIi4JDabNNOd6iQ');
             $ch = curl_init('https://login.eveonline.com/oauth/token');
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -124,13 +124,24 @@ class SiteController extends Controller
                 'code' => $_GET['code']
             ]));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $result = curl_exec($ch);
-            if (!curl_errno($ch)) {
+            $result = curl_exec($ch);*/
+
+            $tokenRequest = new EveCRESTRequest('https://login.eveonline.com/oauth/token');
+            $result = $tokenRequest->post()
+                ->postData(json_encode([
+                    'grant_type' => 'authorization_code',
+                    'code' => $_GET['code']
+                ]))
+                ->authBasic()
+                ->contentType('application/json')
+                ->send();
+
+            if (!curl_errno($result)) {
                 $json = json_decode($result);
                 if ($json) {
                     print_r($json);
 
-                    $ch = curl_init('https://login.eveonline.com/oauth/verify');
+                    /*$ch = curl_init('https://login.eveonline.com/oauth/verify');
                     curl_setopt($ch, CURLOPT_POST, false);
                     curl_setopt($ch, CURLOPT_HTTPHEADER, [
                         "Authorization: Bearer $json->access_token",
@@ -156,7 +167,7 @@ class SiteController extends Controller
                         'scopes'        => $character->Scopes,
                         'refreshToken'  => $json->refresh_token
                     ]);
-                    $user->save();
+                    $user->save();*/
                 } else {
                     echo 'JSON is invalid';
                 }
@@ -208,7 +219,11 @@ class SiteController extends Controller
             print_r($result);
 
             $json = json_decode($result);
-            if ($json) print_r($json);
+            if ($json) {
+                print_r($json);
+
+
+            }
 
             /*$authCode = base64_encode('862b3aa0e295461f8f2fdaaf3055c3f4:JSt85YT7p8w3B36sTvQfzCX37TIi4JDabNNOd6iQ');
             $refreshCh = curl_init('https://login.eveonline.com/oauth/token');
