@@ -111,20 +111,6 @@ class SiteController extends Controller
     {
         echo '<pre>';
         if (isset($_GET['code'])) {
-            /*$authCode = base64_encode('862b3aa0e295461f8f2fdaaf3055c3f4:JSt85YT7p8w3B36sTvQfzCX37TIi4JDabNNOd6iQ');
-            $ch = curl_init('https://login.eveonline.com/oauth/token');
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                "Authorization: Basic $authCode",
-                'Content-Type: application/json',
-                'Host: login.eveonline.com'
-            ]);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
-                'grant_type' => 'authorization_code',
-                'code' => $_GET['code']
-            ]));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $result = curl_exec($ch);*/
 
             $result = (new EveCRESTRequest('https://login.eveonline.com/oauth/token'))
                 ->post()
@@ -196,26 +182,14 @@ class SiteController extends Controller
             'characterID' => $id
         ]);
         if ($user) {
-            $ch = curl_init("https://crest-tq.eveonline.com/characters/{$id}/");
-            curl_setopt($ch, CURLOPT_POST, false);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                "Authorization: Bearer $user->accessToken",
-                'Content-Type: application/vnd.ccp.eve.Api-v3+json; charset=utf-8',
-                'Host: login.eveonline.com'
-            ]);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $result = curl_exec($ch);
+            $result = (new EveCRESTRequest("https://crest-tq.eveonline.com/characters/{$id}/", $user->accessToken))
+                ->send();
 
-            if (curl_errno($ch)) {
-                echo curl_errno($ch) . ': ' . curl_error($ch);
-            }
             print_r($result);
 
             $json = json_decode($result);
             if ($json) {
                 print_r($json);
-
-
             }
 
             /*$authCode = base64_encode('862b3aa0e295461f8f2fdaaf3055c3f4:JSt85YT7p8w3B36sTvQfzCX37TIi4JDabNNOd6iQ');
