@@ -4,17 +4,6 @@
 $this->pageTitle=Yii::app()->name;
 ?>
 
-<h1>Welcome to <i><?php echo CHtml::encode(Yii::app()->name); ?></i></h1>
-
-<p>Congratulations! You have successfully created your Yii application.</p>
-
-<p>You may change the content of this page by modifying the following two files:</p>
-<ul>
-	<li>View file: <code><?php echo __FILE__; ?></code></li>
-	<li>Layout file: <code><?php echo $this->getLayoutFile('main'); ?></code></li>
-</ul>
-
-<p>For more details on how to further develop this application, please read
-the <a href="http://www.yiiframework.com/doc/">documentation</a>.
-Feel free to ask in the <a href="http://www.yiiframework.com/forum/">forum</a>,
-should you have any questions.</p>
+<a href="https://login.eveonline.com/oauth/authorize?response_type=code&redirect_uri=<?php echo urlencode('http://eve.denis-khodakovskiy.ru/index.php/site/callback') ?>&client_id=862b3aa0e295461f8f2fdaaf3055c3f4&scope=<?php echo urlencode('characterLocationRead characterSkillsRead characterWalletRead characterAssetsRead') ?>&state=uniquestate">
+    <img alt="EVE SSO Login Buttons Small Black" src="https://images.contentful.com/idjq7aai9ylm/12vrPsIMBQi28QwCGOAqGk/33234da7672c6b0cdca394fc8e0b1c2b/EVE_SSO_Login_Buttons_Small_Black.png?w=195&amp;h=30">
+</a>
