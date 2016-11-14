@@ -10,6 +10,7 @@
  * @property string $accessToken
  * @property string $expiresOn
  * @property string $scopes
+ * @property string $refreshToken
  */
 class User extends CActiveRecord
 {
@@ -31,11 +32,11 @@ class User extends CActiveRecord
 		return array(
 			array('characterID, characterName, accessToken, expiresOn', 'required'),
 			array('characterID', 'numerical', 'integerOnly'=>true),
-			array('characterName, accessToken', 'length', 'max'=>255),
+			array('characterName, accessToken, refreshToken', 'length', 'max'=>255),
 			array('scopes', 'length', 'max'=>2048),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, characterID, characterName, accessToken, expiresOn, scopes', 'safe', 'on'=>'search'),
+			array('id, characterID, characterName, accessToken, expiresOn, scopes, refreshToken', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,6 +63,7 @@ class User extends CActiveRecord
 			'accessToken' => 'Access Token',
 			'expiresOn' => 'Expires On',
 			'scopes' => 'Scopes',
+			'refreshToken' => 'Refresh Token',
 		);
 	}
 
@@ -89,6 +91,7 @@ class User extends CActiveRecord
 		$criteria->compare('accessToken',$this->accessToken,true);
 		$criteria->compare('expiresOn',$this->expiresOn,true);
 		$criteria->compare('scopes',$this->scopes,true);
+		$criteria->compare('refreshToken',$this->refreshToken,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
