@@ -130,7 +130,7 @@ class SiteController extends Controller
                 if ($json) {
                     print_r($json);
 
-                    /*$ch = curl_init('https://login.eveonline.com/oauth/verify');
+                    $ch = curl_init('https://login.eveonline.com/oauth/verify');
                     curl_setopt($ch, CURLOPT_POST, false);
                     curl_setopt($ch, CURLOPT_HTTPHEADER, [
                         "Authorization: Bearer $json->access_token",
@@ -139,9 +139,9 @@ class SiteController extends Controller
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                     $result = curl_exec($ch);
 
-                    $character = json_decode($result);*/
+                    $character = json_decode($result);
 
-
+                    print_r($character);
                 } else {
                     echo 'JSON is invalid';
                 }
