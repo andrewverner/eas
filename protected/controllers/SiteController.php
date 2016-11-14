@@ -137,6 +137,8 @@ class SiteController extends Controller
                 ->send();
 
             if ($result) {
+                print_r($result);
+
                 $json = json_decode($result);
                 if ($json) {
                     print_r($json);
