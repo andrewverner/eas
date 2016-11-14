@@ -22,7 +22,7 @@ class EveCRESTRequest
 
     public function __construct($url)
     {
-        $this->authCode = md5("{$this->appid}:{$this->secret}");
+        $this->authCode = base64_encode("{$this->appid}:{$this->secret}");
         $this->url = $url;
         return $this;
     }
