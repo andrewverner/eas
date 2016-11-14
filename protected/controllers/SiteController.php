@@ -125,7 +125,26 @@ class SiteController extends Controller
             ]));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $result = curl_exec($ch);
-            var_dump($result);
+            if (!curl_errno($ch)) {
+                $json = json_decode($result);
+                if ($json) {
+                    print_r($json);
+
+                    $ch = curl_init('https://login.eveonline.com/oauth/verify');
+                    curl_setopt($ch, CURLOPT_POST, false);
+                    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                        "Authorization: Bearer $json->access_token",
+                        'Host: login.eveonline.com'
+                    ]);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    $result = curl_exec($ch);
+                    var_dump($result);
+                } else {
+                    echo 'JSON is invalid';
+                }
+            } else {
+                echo 'cURL error';
+            }
         }
         echo '</pre>';
     }
