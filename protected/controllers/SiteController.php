@@ -142,6 +142,20 @@ class SiteController extends Controller
                     $character = json_decode($result);
 
                     print_r($character);
+
+                    $user = User::model()->findByAttributes([
+                        'characterID' => $character->CharacterID
+                    ]);
+                    if (!$user) $user = new User();
+
+                    $user->setAttributes([
+                        'characterID'   => $character->CharacterID,
+                        'characterName' => $character->CharacterName,
+                        'accessToken'   => $json->access_token,
+                        'expiresOn'     => $character->ExpiresOn,
+                        'scopes'        => $character->Scopes
+                    ]);
+                    $user->save();
                 } else {
                     echo 'JSON is invalid';
                 }
