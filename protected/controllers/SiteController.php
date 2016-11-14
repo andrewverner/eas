@@ -191,7 +191,7 @@ class SiteController extends Controller
             'characterID' => $id
         ]);
         if ($user) {
-            $ch = curl_init("https://crest-tq.eveonline.com/characters/$user->characterID/characterOpportunitiesRead/");
+            $ch = curl_init("https://crest-tq.eveonline.com/characters/$user->characterID/location/");
             curl_setopt($ch, CURLOPT_POST, false);
             curl_setopt($ch, CURLOPT_HTTPHEADER, [
                 "Authorization: Bearer $user->accessToken",
