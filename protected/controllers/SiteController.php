@@ -192,7 +192,7 @@ class SiteController extends Controller
             'characterID' => $id
         ]);
         if ($user) {
-            $ch = curl_init("https://crest-tq.eveonline.com/characters/{$user->characterID}/location/");
+            $ch = curl_init("https://crest-tq.eveonline.com/characters/{$id}/");
             curl_setopt($ch, CURLOPT_POST, false);
             curl_setopt($ch, CURLOPT_HTTPHEADER, [
                 "Authorization: Bearer $user->accessToken",
@@ -205,13 +205,12 @@ class SiteController extends Controller
             if (curl_errno($ch)) {
                 echo curl_errno($ch) . ': ' . curl_error($ch);
             }
-
             print_r($result);
 
             $json = json_decode($result);
-            print_r($json);
+            if ($json) print_r($json);
 
-            $authCode = base64_encode('862b3aa0e295461f8f2fdaaf3055c3f4:JSt85YT7p8w3B36sTvQfzCX37TIi4JDabNNOd6iQ');
+            /*$authCode = base64_encode('862b3aa0e295461f8f2fdaaf3055c3f4:JSt85YT7p8w3B36sTvQfzCX37TIi4JDabNNOd6iQ');
             $refreshCh = curl_init('https://login.eveonline.com/oauth/token');
             curl_setopt($refreshCh, CURLOPT_POST, true);
             curl_setopt($refreshCh, CURLOPT_HTTPHEADER, [
@@ -234,7 +233,7 @@ class SiteController extends Controller
                 $user->accessToken = $json->access_token;
                 $user->refreshToken = $json->refresh_token;
                 $user->save();
-            }
+            }*/
         }
         echo '</pre>';
     }
