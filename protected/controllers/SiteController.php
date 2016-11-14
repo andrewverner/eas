@@ -200,12 +200,12 @@ class SiteController extends Controller
             ]);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $result = curl_exec($ch);
+            print_r($result);
 
             $json = json_decode($result);
-
             print_r($json);
 
-            $authCode = base64_encode('862b3aa0e295461f8f2fdaaf3055c3f4:JSt85YT7p8w3B36sTvQfzCX37TIi4JDabNNOd6iQ');
+            /*$authCode = base64_encode('862b3aa0e295461f8f2fdaaf3055c3f4:JSt85YT7p8w3B36sTvQfzCX37TIi4JDabNNOd6iQ');
             $refreshCh = curl_init('https://login.eveonline.com/oauth/token');
             curl_setopt($refreshCh, CURLOPT_POST, true);
             curl_setopt($refreshCh, CURLOPT_HTTPHEADER, [
@@ -227,7 +227,7 @@ class SiteController extends Controller
             if (isset($json->access_token)) {
                 $user->accessToken = $json->access_token;
                 $user->save();
-            }
+            }*/
         }
         echo '</pre>';
     }
