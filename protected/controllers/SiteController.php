@@ -190,6 +190,11 @@ class SiteController extends Controller
             $json = json_decode($result);
             if ($json) {
                 print_r($json);
+
+                $location = (new EveCRESTRequest($json->location->href, $user->accessToken))
+                    ->send();
+
+                var_dump($location);
             }
 
             /*$authCode = base64_encode('862b3aa0e295461f8f2fdaaf3055c3f4:JSt85YT7p8w3B36sTvQfzCX37TIi4JDabNNOd6iQ');
