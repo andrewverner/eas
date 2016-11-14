@@ -152,4 +152,20 @@ class SiteController extends Controller
         echo '</pre>';
     }
 
+    public function actionTest()
+    {
+        $ch = curl_init('https://login.eveonline.com/oauth/verify');
+        curl_setopt($ch, CURLOPT_POST, false);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Authorization: Bearer GzVtW_C2dZsXV_sjrK2Fg3HKhQ96tD3tDEPWl6FtaMIzdJ6IGTp8f_2IgqmDE3L-1-RpER6wgWOkYopM5buUiQ2",
+            'Host: login.eveonline.com'
+        ]);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch);
+
+        $character = json_decode($result);
+
+        print_r($character);
+    }
+
 }
