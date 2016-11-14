@@ -136,7 +136,7 @@ class SiteController extends Controller
                 ->contentType('application/json')
                 ->send();
 
-            if (!curl_errno($result)) {
+            if ($result) {
                 $json = json_decode($result);
                 if ($json) {
                     print_r($json);
