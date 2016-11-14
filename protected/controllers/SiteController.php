@@ -185,16 +185,20 @@ class SiteController extends Controller
             $result = (new EveCRESTRequest("https://crest-tq.eveonline.com/characters/{$id}/", $user->accessToken))
                 ->send();
 
-            print_r($result);
+            //print_r($result);
 
             $json = json_decode($result);
             if ($json) {
-                print_r($json);
+                //print_r($json);
 
-                $location = (new EveCRESTRequest($json->location->href, $user->accessToken))
-                    ->send();
+                foreach ($json as $data) {
+                    if (isset($data->href)) {
+                        $res = (new EveCRESTRequest($data->href, $user->accessToken))
+                            ->send();
 
-                var_dump($location);
+                        var_dump($res);
+                    }
+                }
             }
 
             /*$authCode = base64_encode('862b3aa0e295461f8f2fdaaf3055c3f4:JSt85YT7p8w3B36sTvQfzCX37TIi4JDabNNOd6iQ');
