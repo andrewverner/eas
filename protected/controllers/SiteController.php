@@ -126,34 +126,22 @@ class SiteController extends Controller
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $result = curl_exec($ch);*/
 
-            $request = (new EveCRESTRequest('https://login.eveonline.com/oauth/token'))
+            $result = (new EveCRESTRequest('https://login.eveonline.com/oauth/token'))
                 ->post()
                 ->postData(json_encode([
                     'grant_type' => 'authorization_code',
                     'code' => $_GET['code']
                 ]))
                 ->authBasic()
-                ->contentType('application/json');
-
-            print_r($request);
-
-            $result = $request->send();
+                ->contentType('application/json')
+                ->send();
 
             if ($result) {
-                print_r($result);
-
                 $json = json_decode($result);
                 if ($json) {
-                    print_r($json);
-
-                    /*$ch = curl_init('https://login.eveonline.com/oauth/verify');
-                    curl_setopt($ch, CURLOPT_POST, false);
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                        "Authorization: Bearer $json->access_token",
-                        'Host: login.eveonline.com'
-                    ]);
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                    $result = curl_exec($ch);
+                    $result = (new EveCRESTRequest('https://login.eveonline.com/oauth/verify', $json->access_token))
+                        ->contentType('application/json')
+                        ->send();
 
                     $character = json_decode($result);
 
@@ -172,7 +160,7 @@ class SiteController extends Controller
                         'scopes'        => $character->Scopes,
                         'refreshToken'  => $json->refresh_token
                     ]);
-                    $user->save();*/
+                    $user->save();
                 } else {
                     echo 'JSON is invalid';
                 }

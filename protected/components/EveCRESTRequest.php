@@ -20,9 +20,9 @@ class EveCRESTRequest
     private $appid = '862b3aa0e295461f8f2fdaaf3055c3f4';
     private $authCode;
 
-    public function __construct($url)
+    public function __construct($url, $accessCode = false)
     {
-        $this->authCode = base64_encode("{$this->appid}:{$this->secret}");
+        $this->authCode = ($accessCode) ? $accessCode : base64_encode("{$this->appid}:{$this->secret}");
         $this->url = $url;
         return $this;
     }
