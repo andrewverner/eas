@@ -126,15 +126,18 @@ class SiteController extends Controller
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $result = curl_exec($ch);*/
 
-            $result = (new EveCRESTRequest('https://login.eveonline.com/oauth/token'))
+            $request = (new EveCRESTRequest('https://login.eveonline.com/oauth/token'))
                 ->post()
                 ->postData(json_encode([
                     'grant_type' => 'authorization_code',
                     'code' => $_GET['code']
                 ]))
                 ->authBasic()
-                ->contentType('application/json')
-                ->send();
+                ->contentType('application/json');
+
+            print_r($request);
+
+            $result = $request->send();
 
             if ($result) {
                 print_r($result);
