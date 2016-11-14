@@ -191,8 +191,11 @@ class SiteController extends Controller
             if ($json) {
                 //print_r($json);
 
-                foreach ($json as $data) {
+                foreach ($json as $key => $data) {
                     if (isset($data->href)) {
+
+                        echo $key;
+
                         $res = (new EveCRESTRequest($data->href, $user->accessToken))
                             ->send();
 
