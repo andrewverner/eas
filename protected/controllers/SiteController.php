@@ -221,7 +221,7 @@ class SiteController extends Controller
             ]);
             curl_setopt($refreshCh, CURLOPT_POSTFIELDS, json_encode([
                 'grant_type' => 'refresh_token',
-                'refresh_token' => $user->accessToken
+                'refresh_token' => $user->refreshToken
             ]));
             curl_setopt($refreshCh, CURLOPT_RETURNTRANSFER, true);
             $result = curl_exec($refreshCh);
@@ -232,6 +232,7 @@ class SiteController extends Controller
 
             if (isset($json->access_token)) {
                 $user->accessToken = $json->access_token;
+                $user->refreshToken = $json->refresh_token;
                 $user->save();
             }
         }
