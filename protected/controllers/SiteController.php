@@ -184,4 +184,26 @@ class SiteController extends Controller
         echo '</pre>';
     }
 
+    public function actionUser($id)
+    {
+        $user = User::model()->findByAttributes([
+            'characterID' => $id
+        ]);
+        if ($user) {
+            $ch = curl_init("https://crest-tq.eveonline.com/characters/$user->characterID/location/");
+            curl_setopt($ch, CURLOPT_POST, false);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                "Authorization: Bearer $user->accessToken",
+                'Accept: application/vnd.ccp.eve.Api-v3+json',
+                'Host: login.eveonline.com'
+            ]);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $result = curl_exec($ch);
+
+            $json = json_decode($result);
+
+            print_r($json);
+        }
+    }
+
 }
