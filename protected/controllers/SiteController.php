@@ -200,6 +200,11 @@ class SiteController extends Controller
             ]);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $result = curl_exec($ch);
+
+            if (curl_errno($ch)) {
+                echo curl_errno($ch) . ': ' . curl_error($ch);
+            }
+
             print_r($result);
 
             $json = json_decode($result);
