@@ -15,9 +15,22 @@ class EveCRESTCharacter
     {
         $this->_userModel = $user;
         if ((new DateTime($user->expiresOn))->getTimestamp() < time()) {
-            echo "{$this->_userModel->accessToken}<br />";
             $this->_tokenUpdateNeeded();
-            echo "{$this->_userModel->accessToken}";
+        }
+    }
+
+    public function details()
+    {
+        if (!$this->_userModel->accessToken) return false;
+
+        $characterRequest = (new EveCRESTRequest(
+            "https://crest-tq.eveonline.com/characters/{$this->_userModel->characterID}/",
+            $this->_userModel->accessToken)
+        )->send();
+
+        if ($characterRequest) {
+            $characterJson = json_decode($characterRequest);
+            print_r($characterJson);
         }
     }
 
@@ -38,10 +51,10 @@ class EveCRESTCharacter
             if ($json && isset($json->access_token) && isset($json->refresh_token)) {
                 $this->_userModel->saveAttributes([
                     'accessToken'   => $json->access_token,
-                    'refreshToken'  => $json->refresh_token
+                    'refreshToken'  => $json->refresh_token,
+                    'expiresOn'     => (new DateTime())->modify('+1200 second')->format('Y-m-d H:i:s')
                 ]);
-            }
-            else
+            } else {
                 EveLogger::log(
                     __CLASS__,
                     EveLogger::LEVEL_NOTICE,
@@ -49,14 +62,17 @@ class EveCRESTCharacter
                     . print_r($result, true)
                     . print_r($json, true)
                 );
-        }
-        else
+                $this->_userModel->saveAttributes(['accessToken' => null]);
+            }
+        } else {
             EveLogger::log(
                 __CLASS__,
                 EveLogger::LEVEL_NOTICE,
                 "Can't update user token (RESULT) {$this->_userModel->characterID}: "
                 . print_r($result, true)
             );
+            $this->_userModel->saveAttributes(['accessToken' => null]);
+        }
     }
 
 }
