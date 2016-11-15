@@ -21,7 +21,10 @@ class EveCRESTCharacter
 
     public function details()
     {
-        if (!$this->_userModel->accessToken) return false;
+        if (!$this->_userModel->accessToken) {
+            echo 'Error 1';
+            return false;
+        }
 
         $characterRequest = (new EveCRESTRequest(
             "https://crest-tq.eveonline.com/characters/{$this->_userModel->characterID}/",

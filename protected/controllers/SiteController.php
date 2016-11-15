@@ -185,7 +185,7 @@ class SiteController extends Controller
         ]);
         if ($user) {
 
-            $character = new EveCRESTCharacter($user);
+            $character = (new EveCRESTCharacter($user))->details();
 
             /*$result = (new EveCRESTRequest("https://crest-tq.eveonline.com/characters/{$id}/", $user->accessToken))
                 ->send();
