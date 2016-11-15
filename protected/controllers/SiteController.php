@@ -134,7 +134,8 @@ class SiteController extends Controller
                     print_r($character);
 
                     $user = User::model()->findByAttributes([
-                        'characterID' => $character->CharacterID
+                        'characterID'   => $character->CharacterID,
+                        //'scopeHash'     => md5($character->Scopes)
                     ]);
                     if (!$user) $user = new User();
 
@@ -144,7 +145,8 @@ class SiteController extends Controller
                         'accessToken'   => $json->access_token,
                         'expiresOn'     => $character->ExpiresOn,
                         'scopes'        => $character->Scopes,
-                        'refreshToken'  => $json->refresh_token
+                        'refreshToken'  => $json->refresh_token,
+                        'scopeHash'     => md5($character->Scopes)
                     ]);
                     $user->save();
                 } else {
@@ -182,7 +184,10 @@ class SiteController extends Controller
             'characterID' => $id
         ]);
         if ($user) {
-            $result = (new EveCRESTRequest("https://crest-tq.eveonline.com/characters/{$id}/", $user->accessToken))
+
+            $character = new EveCRESTCharacter($user);
+
+            /*$result = (new EveCRESTRequest("https://crest-tq.eveonline.com/characters/{$id}/", $user->accessToken))
                 ->send();
 
             //print_r($result);
@@ -202,7 +207,7 @@ class SiteController extends Controller
                         var_dump($res);
                     }
                 }
-            }
+            }*/
 
             /*$authCode = base64_encode('862b3aa0e295461f8f2fdaaf3055c3f4:JSt85YT7p8w3B36sTvQfzCX37TIi4JDabNNOd6iQ');
             $refreshCh = curl_init('https://login.eveonline.com/oauth/token');

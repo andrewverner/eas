@@ -11,6 +11,7 @@
  * @property string $expiresOn
  * @property string $scopes
  * @property string $refreshToken
+ * @property string $scopeHash
  */
 class User extends CActiveRecord
 {
@@ -30,13 +31,14 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('characterID, characterName, accessToken, expiresOn', 'required'),
+			array('characterID, characterName, accessToken, expiresOn, scopeHash', 'required'),
 			array('characterID', 'numerical', 'integerOnly'=>true),
 			array('characterName, accessToken, refreshToken', 'length', 'max'=>255),
 			array('scopes', 'length', 'max'=>2048),
+			array('scopeHash', 'length', 'max'=>32),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, characterID, characterName, accessToken, expiresOn, scopes, refreshToken', 'safe', 'on'=>'search'),
+			array('id, characterID, characterName, accessToken, expiresOn, scopes, refreshToken, scopeHash', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,6 +66,7 @@ class User extends CActiveRecord
 			'expiresOn' => 'Expires On',
 			'scopes' => 'Scopes',
 			'refreshToken' => 'Refresh Token',
+			'scopeHash' => 'Scope Hash',
 		);
 	}
 
@@ -92,6 +95,7 @@ class User extends CActiveRecord
 		$criteria->compare('expiresOn',$this->expiresOn,true);
 		$criteria->compare('scopes',$this->scopes,true);
 		$criteria->compare('refreshToken',$this->refreshToken,true);
+		$criteria->compare('scopeHash',$this->scopeHash,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
