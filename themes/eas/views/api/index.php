@@ -7,7 +7,7 @@
  */
 ?>
 
-<a href="https://login.eveonline.com/oauth/authorize?response_type=code&redirect_uri=<?php echo urlencode('http://eve.denis-khodakovskiy.ru/index.php/site/callback') ?>&client_id=862b3aa0e295461f8f2fdaaf3055c3f4&scope=<?php echo urlencode(implode(' ',[
+<a href="https://login.eveonline.com/oauth/authorize?response_type=code&redirect_uri=<?php echo urlencode('http://eve.denis-khodakovskiy.ru/index.php/api/verify') ?>&client_id=862b3aa0e295461f8f2fdaaf3055c3f4&scope=<?php echo urlencode(implode(' ',[
     'characterAccountRead',
     'characterAssetsRead',
     'characterBookmarksRead',
