@@ -40,8 +40,6 @@ class ApiController extends Controller
 
                      $character = json_decode($result);
 
-                     print_r($character);
-
                      $user = User::model()->findByAttributes([
                          'characterID'   => $character->CharacterID,
                          //'scopeHash'     => md5($character->Scopes)
@@ -72,6 +70,18 @@ class ApiController extends Controller
              'error'    => $error,
              'user'     => $user
          ]);
+     }
+
+     public function actionUser($id)
+     {
+         $user = User::model()->findByAttributes([
+             'characterID' => $id
+         ]);
+         if ($user) {
+
+             $character = (new EveCRESTCharacter($user))->details();
+
+         }
      }
 
 }
