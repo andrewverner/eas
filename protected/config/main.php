@@ -8,6 +8,7 @@
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'My Web Application',
+    'theme' => 'eas',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -44,6 +45,7 @@ return array(
 			'urlFormat'=>'path',
 			'rules'=>array(
 			    'site/user/<id:\d+>' => 'site/user',
+                'api/user/<id:\d+>' => 'api/user',
 
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',

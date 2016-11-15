@@ -22,7 +22,6 @@ class EveCRESTCharacter
     public function details()
     {
         if (!$this->_userModel->accessToken) {
-            echo 'Error 1';
             return false;
         }
 

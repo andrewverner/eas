@@ -187,6 +187,8 @@ class SiteController extends Controller
 
             $character = (new EveCRESTCharacter($user))->details();
 
+
+
             /*$result = (new EveCRESTRequest("https://crest-tq.eveonline.com/characters/{$id}/", $user->accessToken))
                 ->send();
 
