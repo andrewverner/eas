@@ -30,6 +30,7 @@ class EveCRESTCharacter
                 'refresh_token' => $this->_userModel->refreshToken
             ]))
             ->authBasic()
+            ->contentType('application/json')
             ->send();
 
         if ($result) {
