@@ -14,7 +14,7 @@ class ApiController extends Controller
         $this->render('index');
     }
 
-     public function verify()
+     public function actionVerify()
      {
          $error = false;
          $user = false;
