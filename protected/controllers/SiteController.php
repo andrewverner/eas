@@ -189,7 +189,7 @@ class SiteController extends Controller
 
             $json = json_decode($result);
             if ($json) {
-                //print_r($json);
+                print_r($json);
 
                 foreach ($json as $key => $data) {
                     if (isset($data->href)) {
