@@ -15,8 +15,9 @@ class EveCRESTCharacter
     {
         $this->_userModel = $user;
         if ((new DateTime($user->expiresOn))->getTimestamp() < time()) {
-            //$this->_tokenUpdateNeeded();
-            echo Yii::app()->params['logsPath'];
+            echo "{$this->_userModel->accessToken}<br />";
+            $this->_tokenUpdateNeeded();
+            echo "{$this->_userModel->accessToken}";
         }
     }
 
@@ -34,7 +35,7 @@ class EveCRESTCharacter
         if ($result) {
             $json = json_decode($result);
             if ($json && isset($json->access_token) && isset($json->refresh_token)) {
-                $this->_userModel->setAttributes([
+                $this->_userModel->saveAttributes([
                     'accessToken'   => $json->access_token,
                     'refreshToken'  => $json->refresh_token
                 ]);
