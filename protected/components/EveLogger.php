@@ -15,7 +15,7 @@ class EveLogger
 
     public static function log($category, $level, $message)
     {
-        if (!file(Yii::app()->params['logsPath'])) {
+        if (!file_exists(Yii::app()->params['logsPath'])) {
             if (!mkdir(Yii::app()->params['logsPath'], 0777, true)) exit;
         }
 
